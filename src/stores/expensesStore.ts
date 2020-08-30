@@ -1,17 +1,10 @@
 import { observable, action } from 'mobx';
 import { Fetcher } from './fetcher';
-import { creatingExpense } from './loadingTypes';
-import api from '@Helpers/api';
+import { loaderCreatingExpense } from './loadingTypes';
+import api, { requestType } from '@Helpers/api';
+import { ExpensesStoreInt, ExpenseType } from './model';
 
-export type ExpenseType = {
-  _id?: string;
-  name: string;
-  category: string;
-  description: string;
-  date: string;
-};
-
-export class ExpensesStore {
+class ExpensesStore implements ExpensesStoreInt {
   @observable films: ExpenseType[] = [];
 
   @action.bound
@@ -21,21 +14,25 @@ export class ExpensesStore {
     category,
     date,
   }: ExpenseType): Promise<void> {
-    Fetcher.loaderStart(creatingExpense);
+    await Fetcher.loaderStart(loaderCreatingExpense);
 
-    await api<ExpenseType>({
-      endpoint: 'expenses',
-      method: 'POST',
-      body: {
-        name,
-        description,
-        category,
-        date,
-      },
-    });
-
-    Fetcher.loaderSuccess(creatingExpense);
+    try {
+      await api<ExpenseType>({
+        endpoint: 'expenses',
+        method: requestType.post,
+        body: {
+          name,
+          description,
+          category,
+          date,
+        },
+      });
+    } catch {
+      // await Fetcher.loaderSuccess(loaderCreatingExpense);
+    } finally {
+      await Fetcher.loaderSuccess(loaderCreatingExpense);
+    }
   }
 }
 
-export const Expenses = new ExpensesStore();
+export const Expenses: ExpensesStoreInt = new ExpensesStore();

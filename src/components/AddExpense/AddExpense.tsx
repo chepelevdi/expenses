@@ -1,9 +1,9 @@
 import React from 'react';
 import { useStores } from '../../hooks';
-import { creatingExpense } from '../../stores';
+import { loaderCreatingExpense } from '../../stores';
 import { observer } from 'mobx-react-lite';
 import { useForm, OnSubmit } from 'react-hook-form';
-import { ExpenseType } from '../../stores/expensesStore';
+import { ExpenseType } from '../../stores';
 
 const AddExpense = observer(() => {
   const {
@@ -19,7 +19,7 @@ const AddExpense = observer(() => {
 
   return (
     <div>
-      {getLoaders(creatingExpense) ? (
+      {getLoaders(loaderCreatingExpense) ? (
         <div>loading</div>
       ) : (
         <form onSubmit={handleSubmit(onFormSubmit)}>

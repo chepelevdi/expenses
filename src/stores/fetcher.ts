@@ -1,16 +1,17 @@
 import { observable, action } from 'mobx';
 import { computedFn } from 'mobx-utils';
+import { FetcherStoreInt } from './model';
 
-export class FetcherStore {
+class FetcherStore implements FetcherStoreInt {
   loading = observable<string>([]);
 
   @action.bound
-  async loaderStart(val: string): Promise<void> {
+  loaderStart(val: string): void {
     this.loading.push(val);
   }
 
   @action.bound
-  async loaderSuccess(val: string): Promise<void> {
+  loaderSuccess(val: string): void {
     this.loading.remove(val);
   }
 
@@ -19,4 +20,4 @@ export class FetcherStore {
   });
 }
 
-export const Fetcher = new FetcherStore();
+export const Fetcher: FetcherStoreInt = new FetcherStore();

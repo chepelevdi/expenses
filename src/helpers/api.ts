@@ -1,4 +1,15 @@
-const apiClient = <T>({
+export enum requestType {
+  get = 'GET',
+  post = 'POST',
+  patch = 'PATCH',
+  put = 'PUT',
+  delete = 'DELETE',
+}
+
+/**
+ * ApiClient
+ */
+export default <T>({
   endpoint = '',
   customConfig = {},
   method,
@@ -17,7 +28,7 @@ const apiClient = <T>({
         }
       | undefined;
   };
-  method?: 'GET' | 'POST' | 'PUT' | 'PATCH';
+  method?: requestType;
   body?: {};
 }): Promise<T> => {
   const isFormData = body && body instanceof FormData;
@@ -51,5 +62,3 @@ const apiClient = <T>({
       }
     });
 };
-
-export default apiClient;
