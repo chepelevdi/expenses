@@ -5,12 +5,12 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 
-// const fileEnv = dotenv.config({ path: path.join(__dirname, '.env') }).parsed;
+const fileEnv = dotenv.config({ path: path.join(__dirname, '.env') }).parsed;
 
-// const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
-//   prev[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
-//   return prev;
-// }, {});
+const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
+  return prev;
+}, {});
 
 module.exports = {
   entry: './src/index.tsx',
@@ -64,6 +64,6 @@ module.exports = {
       template: './src/index.html',
     }),
     new ForkTsCheckerWebpackPlugin(),
-    // new webpack.DefinePlugin(envKeys),
+    new webpack.DefinePlugin(envKeys),
   ],
 };

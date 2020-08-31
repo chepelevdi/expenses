@@ -23,7 +23,7 @@ const AddExpense = observer(() => {
         <div>loading</div>
       ) : (
         <form onSubmit={handleSubmit(onFormSubmit)}>
-          <input type="text" name="title" id="title" ref={register} />
+          <input type="text" name="name" id="name" ref={register} />
           {errors.name && <div>{errors.name.message}</div>}
           <input
             type="text"
