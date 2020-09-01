@@ -29,7 +29,7 @@
     "paths": {
       "@Components/*": ["./components/*"],
       "@Hooks/*": ["./hooks/*"],
-      "@ReComponents/*": ["./reusableComponents/*"],
+      "@ReusableComponents/*": ["./reusableComponents/*"],
       "@Helpers": ["./helpers"],
       "@Helpers/*": ["./helpers/*"]
     }
