@@ -1,9 +1,9 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, observable } from 'mobx';
 import { computedFn } from 'mobx-utils';
 import { FetcherStoreInt } from './model';
 
 class FetcherStore implements FetcherStoreInt {
-  loading: string[] = [];
+  loading = observable.array<string>([]);
 
   constructor() {
     makeAutoObservable(this);
