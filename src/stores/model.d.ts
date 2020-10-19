@@ -8,7 +8,8 @@ export type ExpenseType = {
 
 export interface ExpensesStoreInt {
   addExpense: (x: ExpenseType) => Promise<void>;
-  films: Array<ExpenseType>;
+  getExpenses: () => Promise<void>;
+  expenses: Array<ExpenseType>;
 }
 
 export interface FetcherStoreInt {
