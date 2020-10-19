@@ -1,18 +1,20 @@
-import { observable, action } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { computedFn } from 'mobx-utils';
 import { FetcherStoreInt } from './model';
 
 class FetcherStore implements FetcherStoreInt {
-  loading = observable<string>([]);
+  loading: string[] = [];
 
-  @action.bound
+  constructor() {
+    makeAutoObservable(this);
+  }
+
   loaderStart(val: string): void {
     this.loading.push(val);
   }
 
-  @action.bound
   loaderSuccess(val: string): void {
-    this.loading.remove(val);
+    this.loading = this.loading.filter((el) => el !== val);
   }
 
   getLoaders = computedFn((val: string) => {

@@ -1,13 +1,20 @@
-import { observable, action } from 'mobx';
+import { makeObservable, observable, action, runInAction } from 'mobx';
 import { Fetcher } from './fetcher';
 import { loaderCreatingExpense, loaderFetchingExpense } from './loadingTypes';
 import api, { requestType } from '@Helpers/api';
 import { ExpensesStoreInt, ExpenseType } from './model';
 
 class ExpensesStore implements ExpensesStoreInt {
-  @observable expenses: ExpenseType[] = [];
+  expenses: ExpenseType[] = [];
 
-  @action.bound
+  constructor() {
+    makeObservable(this, {
+      expenses: observable,
+      addExpense: action.bound,
+      getExpenses: action.bound,
+    });
+  }
+
   async addExpense({
     name,
     description,
@@ -34,7 +41,6 @@ class ExpensesStore implements ExpensesStoreInt {
     }
   }
 
-  @action.bound
   async getExpenses(): Promise<void> {
     await Fetcher.loaderStart(loaderFetchingExpense);
 
@@ -43,8 +49,9 @@ class ExpensesStore implements ExpensesStoreInt {
         endpoint: 'expenses',
         method: requestType.get,
       });
-
-      this.expenses = expenses;
+      runInAction(() => {
+        this.expenses = expenses;
+      });
     } catch {
       // await Fetcher.loaderSuccess(loaderFetchingExpense);
     } finally {
