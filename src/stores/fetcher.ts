@@ -14,7 +14,7 @@ class FetcherStore implements FetcherStoreInt {
   }
 
   loaderSuccess(val: string): void {
-    this.loading.remove(val);
+    this.loading = this.loading.filter((el) => el !== val);
   }
 
   getLoaders = computedFn((val: string) => {
