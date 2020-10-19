@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import FilmsList from '@Components/FilmsList';
 import AddExpense from '@Components/AddExpense';
+import ExpensesList from '@Components/ExpensesList';
 
 import 'mobx-react-lite/batchingForReactDom';
 
 const Counter: React.FC = () => {
   return (
-    <div>
+    <>
       <AddExpense />
-    </div>
+      <ExpensesList />
+    </>
   );
 };
 

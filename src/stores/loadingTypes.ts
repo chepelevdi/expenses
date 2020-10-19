@@ -1,2 +1,2 @@
-export const loaderFetchingExpense = 'fetchingFilms';
-export const loaderCreatingExpense = 'creatingFilms';
+export const loaderFetchingExpense = 'fetchingExpenses';
+export const loaderCreatingExpense = 'creatingExpenses';

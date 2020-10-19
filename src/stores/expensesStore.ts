@@ -1,11 +1,11 @@
 import { observable, action } from 'mobx';
 import { Fetcher } from './fetcher';
-import { loaderCreatingExpense } from './loadingTypes';
+import { loaderCreatingExpense, loaderFetchingExpense } from './loadingTypes';
 import api, { requestType } from '@Helpers/api';
 import { ExpensesStoreInt, ExpenseType } from './model';
 
 class ExpensesStore implements ExpensesStoreInt {
-  @observable films: ExpenseType[] = [];
+  @observable expenses: ExpenseType[] = [];
 
   @action.bound
   async addExpense({
@@ -31,6 +31,24 @@ class ExpensesStore implements ExpensesStoreInt {
       // await Fetcher.loaderSuccess(loaderCreatingExpense);
     } finally {
       await Fetcher.loaderSuccess(loaderCreatingExpense);
+    }
+  }
+
+  @action.bound
+  async getExpenses(): Promise<void> {
+    await Fetcher.loaderStart(loaderFetchingExpense);
+
+    try {
+      const expenses = await api<ExpenseType[]>({
+        endpoint: 'expenses',
+        method: requestType.get,
+      });
+
+      this.expenses = expenses;
+    } catch {
+      // await Fetcher.loaderSuccess(loaderFetchingExpense);
+    } finally {
+      await Fetcher.loaderSuccess(loaderFetchingExpense);
     }
   }
 }
