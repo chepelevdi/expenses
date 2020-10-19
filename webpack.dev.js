@@ -57,6 +57,7 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     contentBase: path.join(__dirname, 'build'),
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

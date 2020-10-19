@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AddExpense from '@Components/AddExpense';
-import ExpensesList from '@Components/ExpensesList';
-
-import 'mobx-react-lite/batchingForReactDom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './app';
 
 const Counter: React.FC = () => {
   return (
-    <>
-      <AddExpense />
-      <ExpensesList />
-    </>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   );
 };
 
